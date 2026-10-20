@@ -226,6 +226,12 @@ namespace MemLens
             body.AutoScrollPosition = new Point(0, 0);
         }
 
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            DpiScale.Apply(this, new Size(780, 700), new Size(700, 600));
+        }
+
         private static void AddHeading(TableLayoutPanel panel, string text)
         {
             int row = panel.RowCount;

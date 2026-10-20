@@ -158,6 +158,12 @@ namespace MemLens
         [DllImport("kernel32.dll")]
         public static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);
 
+        [DllImport("user32.dll")]
+        public static extern uint GetDpiForWindow(IntPtr hwnd);
+
+        [DllImport("user32.dll")]
+        public static extern uint GetDpiForSystem();
+
         [DllImport("kernel32.dll", SetLastError = false)]
         private static extern void SetLastError(uint dwErrCode);
 

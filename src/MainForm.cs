@@ -57,13 +57,14 @@ namespace MemLens
         private bool _sortDesc = true;
         private int _selectedPid = -1;
         private int _scanGeneration;
+        private float _uiScale = 1f;
 
         public MainForm()
         {
             Text = "MemLens · 内存透视";
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(1280, 870);
-            MinimumSize = new Size(1200, 790);
+            ClientSize = new Size(1280, 820);
+            MinimumSize = new Size(1200, 740);
             StartPosition = FormStartPosition.CenterScreen;
             BackColor = Theme.Bg;
             Font = Theme.Ui(9F);
@@ -84,13 +85,40 @@ namespace MemLens
                 UpdateAdminBadge();
                 try
                 {
-                    _split.Panel2MinSize = 330;
-                    _split.SplitterDistance = Math.Max(720, ClientSize.Width - 380);
+                    int sidebar = (int)Math.Round(380 * _uiScale);
+                    _split.Panel2MinSize = (int)Math.Round(330 * _uiScale);
+                    _split.SplitterDistance = Math.Max((int)Math.Round(720 * _uiScale), ClientSize.Width - sidebar);
                     if (_sideHost != null) _sideHost.AutoScrollPosition = new Point(0, 0);
                 }
                 catch { }
                 StartScan();
             };
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            _uiScale = DpiScale.Apply(this, new Size(1280, 820), new Size(1200, 740));
+            ScaleGridForDpi(_uiScale);
+        }
+
+        private void ScaleGridForDpi(float scale)
+        {
+            if (_grid == null || scale <= 1.01f) return;
+
+            foreach (DataGridViewColumn column in _grid.Columns)
+            {
+                if (column.AutoSizeMode == DataGridViewAutoSizeColumnMode.Fill)
+                    column.MinimumWidth = (int)Math.Round(column.MinimumWidth * scale);
+                else
+                    column.Width = (int)Math.Round(column.Width * scale);
+            }
+
+            int header = (int)Math.Round(40 * scale);
+            if (_grid.ColumnHeadersHeight < header) _grid.ColumnHeadersHeight = header;
+
+            int row = (int)Math.Round(34 * scale);
+            if (_grid.RowTemplate.Height < row) _grid.RowTemplate.Height = row;
         }
 
         private void BuildUi()

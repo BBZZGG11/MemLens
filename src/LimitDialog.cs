@@ -164,6 +164,12 @@ namespace MemLens
             _btnApply.Click += delegate { CaptureMode(); };
         }
 
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            DpiScale.Apply(this, new Size(590, 470), Size.Empty);
+        }
+
         private void UpdateEnabled()
         {
             _chkTrim.Enabled = _rbLow.Checked;

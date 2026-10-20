@@ -101,6 +101,12 @@ namespace MemLens
             BuildText();
         }
 
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            DpiScale.Apply(this, new Size(760, 650), new Size(680, 560));
+        }
+
         private void BuildText()
         {
             Append("一句话：这个工具把“可回收的缓存页”和“可能泄漏的私有提交”分开看，不把 Windows 的正常缓存当成故障。\r\n\r\n", Theme.Ui(9.6F), Theme.Ink);

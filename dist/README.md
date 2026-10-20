@@ -154,6 +154,7 @@ powershell -ExecutionPolicy Bypass -File .\Get-MemoryDiagnosis.ps1 -Top 30 -Expo
 
 - 同一个 `MemLens.exe` 可以直接复制到其他 Windows 10/11 机器，不需要 Python、Node、数据库或安装包。
 - 程序只引用 .NET Framework 4.0 的程序集；Windows 10/11 自带 .NET Framework 4.x，所以通常双击即可。
+- 已适配 Windows 系统缩放（100%～200%）；在 150% 缩放下按物理像素渲染，不再由系统位图拉伸，所以文字和表格是清晰的。
 - 请把 `MemLens.exe` 和 `MemLens.exe.config` 放在同一目录；配置文件只是声明兼容性，误删通常也能启动。
 - 极少数被精简过、移除了 .NET Framework 的系统需要先启用/安装 .NET Framework 4.8。
 - 不支持 Windows 7/8：本工具使用了 Windows 10 的内存优先级与进程内存 API。
@@ -195,7 +196,7 @@ MemLens.exe --purge-all [报告.txt] 清理全部待机缓存（需管理员）
 - `--selftest`：PASS。物理内存、可用内存、待机列表、提交上限、进程枚举、CPU 采样、估算边界、内存优先级读/写/恢复均通过。
 - `--trim-test`：PASS。新建 `notepad.exe`，工作集 14.7 MB → 0 MB，实测减少 14.7 MB。
 - PowerShell 脚本：正常输出系统概况、Top 进程和 CSV（UTF-8 BOM）。
-- 界面：主窗口、体检横幅、小白解读、限制对话框、清理对话框、帮助页均在 150% DPI 下截图检查；布局与滚动正常。
+- 界面：主窗口、体检横幅、小白解读、限制对话框、清理对话框、帮助页均在 150% DPI 下截图检查；按物理像素渲染，文字清晰，布局与滚动正常。
 - 一键体检：扫描 → 10 秒增长采样 → 自动弹出小白报告，实测通过。
 - 权限失败路径：非管理员调用 `--purge-low` 返回 `0xC0000061`（权限不足），程序给出可读提示，不崩溃。
 - **未覆盖**：管理员清理待机缓存的成功路径（测试环境无法走 UAC）；跨进程设置内存优先级（测试会话是低完整性，系统拒绝写入）；建议在正常桌面会话中实际验证这两项。

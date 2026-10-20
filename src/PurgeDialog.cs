@@ -160,5 +160,11 @@ namespace MemLens
             AcceptButton = apply;
             CancelButton = cancel;
         }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            DpiScale.Apply(this, new Size(550, 390), Size.Empty);
+        }
     }
 }
