@@ -1,0 +1,15 @@
+# Local build/test artifacts
+tests/
+*.log
+
+# Visual Studio / .NET
+.vs/
+bin/
+obj/
+*.user
+*.suo
+
+# OS junk
+Thumbs.db
+desktop.ini
+.DS_Store
